@@ -2,6 +2,9 @@
 TODO:
     - make equation equal something
     - take a, b, c without using arrays (bad for memory)
+    - handle different amounts of solutions (0, 1, 2)
+    - handle errors (negative radicals)
+    - make gui prettier
  */
 
 import javax.swing.*;
