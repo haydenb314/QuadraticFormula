@@ -1,8 +1,13 @@
+/*
+TODO:
+    - make equation equal something
+    - take a, b, c without using arrays (bad for memory)
+ */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
 public class QuadraticSolver implements ActionListener {
 
@@ -104,6 +109,10 @@ public class QuadraticSolver implements ActionListener {
             //math
             double radical = Math.pow(b, 2);
             radical -= 4 * a * c;
+            if (radical < 0) {
+                lZeros.setText("Radical is negative.");
+                return;
+            }
             radical = Math.sqrt(radical);
 
             double positiveZero = (-b + radical) / 2 * a;
