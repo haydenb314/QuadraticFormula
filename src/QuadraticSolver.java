@@ -1,6 +1,5 @@
 /*
 TODO:
-    - make equation equal something
     - take a, b, c without using arrays (bad for memory)
     - handle different amounts of solutions (0, 1, 2)
     - handle errors (negative radicals)
@@ -31,7 +30,7 @@ public class QuadraticSolver implements ActionListener {
         textField = new JTextField();
         textField.setBounds(45, 40, 400, 40);
         textField.setFont(italicFont);
-        textField.setText(" ");
+        textField.setText("");
 
         lDirections = new JLabel();
         lDirections.setBounds(50, 10, 500, 30);
@@ -60,10 +59,12 @@ public class QuadraticSolver implements ActionListener {
         frame.setVisible(true);
 
         while (true) {
-            if (textField.getText().isBlank()) {
+            if (textField.getText() == null) {
+                bSolve.setEnabled(false);
+            } else if(textField.getText().isBlank()) {
                 bSolve.setEnabled(false);
             } else {
-                bSolve.setEnabled(true);
+               bSolve.setEnabled(true);
             }
         }
     }
@@ -79,6 +80,7 @@ public class QuadraticSolver implements ActionListener {
             String ax = quadraticExpression[0];
             String bx = quadraticExpression[2];
             String strC = quadraticExpression[4];
+            String strAnswer = quadraticExpression[6];
 
             String signB = quadraticExpression[1];
             String signC = quadraticExpression[3];
@@ -108,8 +110,18 @@ public class QuadraticSolver implements ActionListener {
             int a = Integer.parseInt(strA);
             int b = Integer.parseInt(strB);
             int c = Integer.parseInt(strC);
+            int ans = Integer.parseInt(strAnswer);
 
             //math
+            if (ans == 0) {
+                c += 0;
+            } else if (ans < 0) {
+                c += ans;
+            } else {
+                c -= ans;
+            }
+
+            //quadratic formula
             double radical = Math.pow(b, 2);
             radical -= 4 * a * c;
             if (radical < 0) {
@@ -121,7 +133,7 @@ public class QuadraticSolver implements ActionListener {
             double positiveZero = (-b + radical) / 2 * a;
             double negativeZero = (-b - radical) / 2 * a;
 
-            lZeros.setText("Roots: " + String.valueOf(positiveZero) + ", " +  String.valueOf(negativeZero));
+            lZeros.setText("Roots: " + positiveZero + ", " + negativeZero);
         }
     }
 }
