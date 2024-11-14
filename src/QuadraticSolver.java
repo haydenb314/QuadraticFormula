@@ -30,7 +30,7 @@ public class QuadraticSolver implements ActionListener {
         textField = new JTextField();
         textField.setBounds(45, 40, 400, 40);
         textField.setFont(italicFont);
-        textField.setText("");
+        textField.setText(" ");
 
         lDirections = new JLabel();
         lDirections.setBounds(50, 10, 500, 30);
@@ -59,12 +59,14 @@ public class QuadraticSolver implements ActionListener {
         frame.setVisible(true);
 
         while (true) {
-            if (textField.getText() == null) {
-                bSolve.setEnabled(false);
-            } else if(textField.getText().isBlank()) {
-                bSolve.setEnabled(false);
-            } else {
-               bSolve.setEnabled(true);
+            try {
+                if (textField.getText() == null || textField.getText().isBlank()) {
+                    bSolve.setEnabled(false);
+                } else {
+                    bSolve.setEnabled(true);
+                }
+            } catch (Exception e) {
+                System.out.println(e);
             }
         }
     }
@@ -99,6 +101,10 @@ public class QuadraticSolver implements ActionListener {
                 strA = "-" + arrayA[1];
             }
 
+            if (strB.isEmpty()) {
+                strB = "1";
+            }
+
             if (signB.equals("-")) {
                 strB = "-" + bx.substring(0, bx.length() - 1);
             }
@@ -125,7 +131,7 @@ public class QuadraticSolver implements ActionListener {
             double radical = Math.pow(b, 2);
             radical -= 4 * a * c;
             if (radical < 0) {
-                lZeros.setText("Radical is negative.");
+                lZeros.setText("<html>Radical is negative. There are no roots.</html>");
                 return;
             }
             radical = Math.sqrt(radical);
@@ -133,7 +139,12 @@ public class QuadraticSolver implements ActionListener {
             double positiveZero = (-b + radical) / 2 * a;
             double negativeZero = (-b - radical) / 2 * a;
 
-            lZeros.setText("Roots: " + positiveZero + ", " + negativeZero);
+            if (positiveZero == negativeZero) {
+                lZeros.setText("Root: " + positiveZero);
+            } else {
+                lZeros.setText("Roots: " + positiveZero + ", " + negativeZero);
+            }
+
         }
     }
 }
